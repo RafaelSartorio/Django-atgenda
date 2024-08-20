@@ -1,14 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { api } from "../api"
+import { AppContext } from "../components/AppContext"
+import { useNavigate } from "react-router-dom"
+import { promises } from "dns"
 
-export const bemVindo = async(email:string ,senha:string) =>{
+export const bemVindo = async(email:string ,senha:string): Promise<boolean> =>{
+    
     const data : any = await api
 
     if(email === data.email  && senha === data.password ){
-        alert(`Seja muito bem vindo Sr(Sra) ${data.name} `)
+        return true
     }else{
-        alert('Email ou senha incorretos')
+        return false
     }
-
-    alert(`Seja bem vindo ${email}`)
 }

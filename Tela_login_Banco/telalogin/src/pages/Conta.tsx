@@ -1,8 +1,9 @@
 import { Box, Center, SimpleGrid, Spinner } from "@chakra-ui/react"
 import { InfoConta } from "../components/InfoConta"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { api } from "../api"
 import { useNavigate, useParams } from "react-router-dom"
+import { AppContext } from "../components/AppContext"
 
 
 interface UserData {
@@ -16,7 +17,13 @@ interface UserData {
 const Conta =  () =>{
 
     const [dadosUsuario , setDadosUsuario] = useState<UserData | null>()
+    const {id } = useParams()
+    const navegar = useNavigate()
 
+    const  {isLogedIn } = useContext(AppContext)
+    console.log(isLogedIn)
+
+    !isLogedIn && navegar('/')
    
     useEffect(()=>{
         const getData = async() => {
@@ -29,8 +36,6 @@ const Conta =  () =>{
 
     const dataHoje = new Date()
 
-    const {id } = useParams()
-    const navegar = useNavigate()
 
     if(dadosUsuario && id !== dadosUsuario.id){
         navegar('/')
